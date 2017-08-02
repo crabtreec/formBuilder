@@ -33,7 +33,7 @@ let formData = [
   },
   {
     "type": "select",
-    "label": "Select Language",
+    "label": "<Select Language",
     "id": "user-language",
     "icon": "",
     "options": [
@@ -98,14 +98,39 @@ let formData = [
 // -------- Your Code Goes Below this Line --------
 var container = document.getElementById('fields');
 
+
 for (var i = 0; i < formData.length; i++) {
-  var input = formData[i];
+    if (formData[i].type === "textarea") {
+      var element = document.createElement('textarea');
+          element.type = formData[i].type;
+          element.placeholder = formData[i].label;
 
+          container.appendChild(element);
+
+        } else if (formData[i].type === "select") {
+          var element = document.createElement('select');
+              element.type = formData[i].type;
+
+              var dropDown = document.createElement('option');
+              var dropDownContent = document.createTextNode(formData[i].label);
+              element.appendChild(dropDown);
+              dropDown.appendChild(dropDownContent);
+
+              for (let j = 0; j < formData[i].options.length; j++) {
+                var dropDown = document.createElement('option');
+                var dropDownContent = document.createTextNode(formData[i].options[j].label);
+                element.appendChild(dropDown);
+                dropDown.appendChild(dropDownContent);
+              }
+
+            container.appendChild(element);
+  } else {
   var element = document.createElement('input');
-  element.type = input.type;
-  element.placeholder = input.label;
+      element.type = formData[i].type;
+      element.placeholder = formData[i].label;
 
-  container.appendChild(element);
+  //
+      container.appendChild(element);
 
-
+}
 }
